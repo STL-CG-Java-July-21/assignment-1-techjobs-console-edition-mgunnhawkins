@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Created by LaunchCode
@@ -25,7 +22,7 @@ public class TechJobs {
         actionChoices.put("search", "Search");
         actionChoices.put("list", "List");
 
-        System.out.println("Welcome to LaunchCode's TechJobs App!");
+        System.out.println("Welcome to LaunchCode's TechJobs App!"+ "\n");
 
         // Allow the user to search until they manually quit
         while (true) {
@@ -55,11 +52,12 @@ public class TechJobs {
             } else { // choice is "search"
 
                 // How does the user want to search (e.g. by skill or employer)
-                String searchField = getUserSelection("Search by:", columnChoices);
+                String searchField = getUserSelection("\n" + "Search by:", columnChoices);
 
                 // What is their search term?
                 System.out.println("\nSearch term:");
                 String searchTerm = in.nextLine();
+
 
                 if (searchField.equals("all")) {
                     printJobs(JobData.findByValue(searchTerm));
@@ -77,6 +75,7 @@ public class TechJobs {
         Boolean validChoice = false;
         String[] choiceKeys = new String[choices.size()];
 
+
         // Put the choices in an ordered structure so we can
         // associate an integer with each one
         int i = 0;
@@ -87,7 +86,7 @@ public class TechJobs {
 
         do {
 
-            System.out.println("\n" + menuHeader);
+            System.out.println(menuHeader);
 
             // Print available choices
             for (int j = 0; j < choiceKeys.length; j++) {
@@ -119,7 +118,35 @@ public class TechJobs {
 
     // Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
+        if (someJobs.isEmpty()){
+            System.out.println("No Results");
+            return;
+        }
+        System.out.println("");
+        for(HashMap<String, String> job: someJobs){
+            String emptyLine = System.getProperty("line.separator");
+            StringBuilder jobDescription = new StringBuilder();
+            System.out.println(
+                    jobDescription.append("*****")
+                            .append(emptyLine)
+                            .append("position type: " + job.get("position type"))
+                            .append(emptyLine)
+                            .append("name: " + job.get("name"))
+                            .append(emptyLine)
+                            .append("employer: " + job.get("employer"))
+                            .append(emptyLine)
+                            .append("location: " + job.get("location"))
+                            .append(emptyLine)
+                            .append("core competency: " + job.get("core competency"))
+                            .append(emptyLine)
+                            .append("*****")
+                            .append(emptyLine)
+            );
 
-        System.out.println("printJobs is not implemented yet");
+
+
+        }
+
     }
+
 }
