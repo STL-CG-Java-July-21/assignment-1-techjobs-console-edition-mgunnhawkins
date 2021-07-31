@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by LaunchCode
@@ -77,9 +78,9 @@ public class JobData {
 
         for (HashMap<String, String> row : allJobs) {
 
-            String aValue = row.get(column);
+            String aValue = row.get(column);//row is hash.  get value based off of the column key (column name)
 
-            if (aValue.contains(value)) {
+            if (aValue.toLowerCase().contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
@@ -90,16 +91,33 @@ public class JobData {
     /**
      * Search all columns for the given term
      *
-     * @param value The search term to look for
+     * @param searchTerm The search term to look for
      * @return      List of all jobs with at least one field containing the value
      */
-    public static ArrayList<HashMap<String, String>> findByValue(String value) {
+    public static ArrayList<HashMap<String,String>> findByValue(String searchTerm) {
 
         // load data, if not already loaded
         loadData();
 
         // TODO - implement this method
-        return null;
+
+
+
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+
+        for (HashMap<String, String> row : allJobs) {
+            for (Map.Entry<String,String> entry: row.entrySet()){//Map Entry is a way to unpack key value pairs.
+                // When you unpack you will get an object returned called entry.  Within entry there are 2 getters
+                // that get different things(ex: getKey and getValue)
+
+                if ((entry.getValue().toLowerCase()).contains(searchTerm.toLowerCase())){
+                    jobs.add(row);
+                    continue;//once you find a job that contains a value you want to go to the next job
+                }
+            }
+        }
+        //TODO: remove duplicates
+        return jobs;
     }
 
     /**
